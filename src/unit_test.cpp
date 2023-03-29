@@ -134,7 +134,7 @@ TEST(HW1Test, TEST15) {
     std::string mempool{};
     for(const auto& trx : pending_trxs)
         mempool += trx;
-        
+
     show_wallets(server);
     size_t nonce{server.mine()};
     show_wallets(server);
@@ -147,6 +147,3 @@ TEST(HW1Test, TEST15) {
     EXPECT_TRUE(sarah->get_wallet()==13.25 || sarah->get_wallet()==7 || sarah->get_wallet()==7);
 }
 */
-
-
-
