@@ -111,7 +111,7 @@ size_t crypto::calcDecodeLength(const char *b64input)
 
     if (b64input[len - 1] == '=' && b64input[len - 2] == '=') // last two chars are =
         padding = 2;
-    else if (b64input[len - 1] == '=') // last char is =
+    else if (b64input[len - 1] == '=')                        // last char is =
         padding = 1;
     return (len * 3) / 4 - padding;
 }
@@ -155,7 +155,7 @@ bool crypto::verifySignature(std::string publicKey, std::string plainText, std::
     return result & authentic;
 }
 
-const char *crypto::keyFromRSA(RSA *rsa, bool isPrivate)
+char *crypto::keyFromRSA(RSA *rsa, bool isPrivate)
 {
     BIO *bio = BIO_new(BIO_s_mem());
 
@@ -180,8 +180,16 @@ void crypto::generate_key(std::string &public_key, std::string &private_key)
     BN_set_word(bn, RSA_F4);
     RSA_generate_key_ex(rsa, 1024, bn, nullptr);
 
-    public_key = keyFromRSA(rsa, false);
-    private_key = keyFromRSA(rsa, true);
+    auto pub_key = keyFromRSA(rsa, false);
+    public_key = pub_key;
+    free(pub_key);
+
+    auto pri_key = keyFromRSA(rsa, true);
+    private_key = pri_key;
+    free(pri_key);
+    RSA_free(rsa);
+    BN_free(bn);
+    CRYPTO_cleanup_all_ex_data();
 }
 
 std::string crypto::sha256(std::string s)

@@ -20,3 +20,4 @@ target_link_libraries(main
         GTest::GTest
         GTest::Main
 )
+set(CMAKE_CXX_FLAGS "-fPIC -Wall -fsanitize=address -fno-omit-frame-pointer")

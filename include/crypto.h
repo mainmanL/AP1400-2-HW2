@@ -43,7 +43,7 @@ std::string signMessage(std::string privateKey, std::string plainText);
 
 bool verifySignature(std::string publicKey, std::string plainText, std::string signatureBase64);
 
-const char *keyFromRSA(RSA *rsa, bool isPrivate);
+char *keyFromRSA(RSA *rsa, bool isPrivate);
 
 void generate_key(std::string &public_key, std::string &private_key);
 
